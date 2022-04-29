@@ -10,7 +10,7 @@
 void	print_bits(unsigned char octet)
 {
 	int i = 7;
-	while (i <= 0)
+	while (i >= 0)
 	{
 		if (octet & (1 << i))
 			printf("1");
@@ -24,7 +24,7 @@ printf("\n");
 int main(void)
 {
 	char c;
-	c = 9;
+	c = 1;
 
 	print_bits(c);
 }
