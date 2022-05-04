@@ -113,7 +113,7 @@ int main(void)
 {
 	printf("FROM MAIN %s\n",ft_itoa_base(-5000,10));
 	printf("FROM MAIN %s\n",ft_itoa_base(5000,10));
-	printf("FROM MAIN %s\n",ft_itoa_base(342,16));
+	printf("FROM MAIN %s\n",ft_itoa_base(200,16));
 	printf("FROM MAIN %s\n",ft_itoa_base(16,16));
-	printf("FROM MAIN %s\n",ft_itoa_base(12,16));
+	printf("FROM MAIN %s\n",ft_itoa_base(10,16));
 }

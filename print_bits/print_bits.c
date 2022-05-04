@@ -10,7 +10,7 @@
 void	print_bits(unsigned char octet)
 {
 	int i = 7;
-	while (i <= 0)
+	while (i >= 0)
 	{
 		if (octet & (1 << i))
 			printf("1");
@@ -21,11 +21,43 @@ void	print_bits(unsigned char octet)
 printf("\n");
 }
 
-int main(void)
+int	ft_atoi(char *str)
 {
-	char c;
-	c = 9;
+	int rtn;
+	int n;
+	int i;
 
-	print_bits(c);
+	i = 0;
+	rtn = 0;
+	n = 1;
+	while(str[i] == ' ')
+		i++;
+	if(str[i] == '-')
+	{
+		n =  -1;
+		i++;
+	}
+	while(str[i] >= '0' && str[i] <= '9')
+	{
+		rtn = rtn * 10;
+		rtn = rtn + (str[i] - '0');
+		i++;
+	}
+	return (rtn * n);
+}
+
+
+int main(int argc, char **argv)
+{
+	if (argc > 1)
+	{
+		int c;
+		c = ft_atoi(argv[1]);
+		printf("This is the number %d\n", c);
+		printf("This is the bit result : ");
+		print_bits(c);
+	}
+	else
+		printf("Need more then one argument\n");
 }
 

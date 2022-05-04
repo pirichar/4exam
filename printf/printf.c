@@ -5,6 +5,8 @@
 int ft_putchar(char c);
 int ft_putstr(char *str);
 void	ft_putnbr_base(size_t num, size_t base_len, char *base, int *sum);
+void	ft_putnbr(long nb, int *sum);
+void	ft_putcharo(char c, int *sum);
 
 int	ft_printf(char *format, ...)
 {
@@ -25,7 +27,7 @@ int	ft_printf(char *format, ...)
 			else if (*format == 'x')
 				ft_putnbr_base(va_arg(va_list, unsigned int), 16, "0123456789abcdef", &sum);
 			else if (*format == 'd')
-				ft_putnbr_base(va_arg(va_list, unsigned int), 10, "0123456789", &sum);
+				ft_putnbr(va_arg(va_list, int), &sum);
 //			else if (*format == '\0')
 			else
 			{
@@ -62,6 +64,32 @@ int ft_putstr(char *str)
 	return (sum);
 }
 
+void	ft_putcharo(char c, int *sum)
+{
+	write(1,&c, 1);
+	(*sum)++;
+}
+
+void	ft_putnbr(long nb, int *sum)
+{
+	if (nb == 0)
+		ft_putcharo('0', sum);
+	if (nb < 0)
+	{
+		ft_putcharo('-', sum);
+		nb = nb * -1;
+	}
+	if (nb > 10)
+	{
+		ft_putnbr(nb / 10, sum);
+		nb = nb % 10;
+	}
+	if (nb < 10)
+	{
+		ft_putcharo(nb + '0', sum);	
+	}
+}
+
 void	ft_putnbr_base(size_t num, size_t base_len, char *base, int *sum)
 {
 	char c;
@@ -86,6 +114,10 @@ int main(void)
 	
 	i = ft_printf("This is a number = %d\n", 400000);
 	j = printf("This is a number = %d\n", 400000);
+	printf("This is i = %d and this is j %d\n", i, j);
+
+	i = ft_printf("This is a number = %d\n", -400000);
+	j = printf("This is a number = %d\n", -400000);
 	printf("This is i = %d and this is j %d\n", i, j);
 
 	i = ft_printf("This is a number in hex = %x\n", 444444);
