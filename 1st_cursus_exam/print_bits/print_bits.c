@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <unistd.h>
 
 //pour masquer des bits la valeur du masque doit etre a 0
 // avec la valeur de 1 je vais pouvoir voir la vrai valeur recherchée
@@ -7,19 +8,58 @@
 	0000 0010		masque
 	0000 0010		output
 */
+// void	print_bits(unsigned char octet)
+// {
+// 	int i = 7;
+// 	while (i >= 0)
+// 	{
+// 		if (octet & (1 << i))
+// 			printf("1");
+// 		else
+// 			printf("0");
+// 		i--;
+// 	}
+// printf("\n");
+// }
+
+
+
+
+
+
+
+// void	print_bits(unsigned char octet)
+// {
+// 	if (octet >= 2)
+// 	{
+// 		print_bits(octet / 2);
+// 	}
+// 	printf("%d",(octet % 2));
+// }
 void	print_bits(unsigned char octet)
 {
 	int i = 7;
-	while (i >= 0)
+	while ( i >= 0)
 	{
 		if (octet & (1 << i))
-			printf("1");
+			write(1,"1",1);
 		else
-			printf("0");
+			write(1,"0",1);
 		i--;
 	}
-printf("\n");
+	printf("\n");
 }
+
+
+
+
+
+
+
+
+
+
+
 
 int	ft_atoi(char *str)
 {
@@ -54,8 +94,8 @@ int main(int argc, char **argv)
 		int c;
 		c = ft_atoi(argv[1]);
 		printf("This is the number %d\n", c);
-		printf("This is the bit result : ");
 		print_bits(c);
+		printf("This is the bit result : ");
 	}
 	else
 		printf("Need more then one argument\n");

@@ -1,4 +1,10 @@
 Hello this is the first line of my text.
 Here is the second line of my text.
 
+I JUST PASSED A line
+HERE IS ANOTHER BORING line
+BLAH BLAH 
+
+BLAH BLAH , I SKIPPED A LINE
 Here is the last line, I passed a line.
+

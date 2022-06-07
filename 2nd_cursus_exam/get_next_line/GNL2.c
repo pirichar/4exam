@@ -3,13 +3,14 @@
 #include <fcntl.h>
 #include <stdlib.h>
 
+
 #undef BUFFER_SIZE
 #define BUFFER_SIZE 1
 
 int ft_strlen(char *str);
 char *ft_strjoin(char *s1,char *s2);
 
-char *	get_next_line(int fd)
+char *	ft_getnextline(int fd)
 {
 	char *stack = NULL;
 	int ret;
@@ -70,17 +71,27 @@ char *ft_strjoin(char *s1,char *s2)
 	return (str);
 }
 
- int main(void)
- {
-	 int fd;
-	 char *print;
+int main(int argc, char **argv)
+{
+	if (argc == 3)
+	{
+		int fd = open(argv[1],O_RDONLY);
+		if (fd == -1)
+		{
+			printf("Failed to open the file");
+			return (1);
+		}
+		int nb = atoi(argv[2]);
+		int i = 0;
+		while(i < nb)
+		{
+			char *to_print = ft_getnextline(fd);
+			printf("%s\n", to_print);
+			free(to_print);
+			i++;
+		}
+	}
+	else
+		printf("Usage : \n argv[1] == file to open\n argv[2] = nb of line to read\n");
 
-
-	 fd = open("./test_files/emptye.txt", O_RDONLY);
-	for(int i = 0; i < 6; i++)
-	 {
-		print = get_next_line(fd);
-	 	printf("%s", print);
-	 	free (print);
-	 }
- }
+}
