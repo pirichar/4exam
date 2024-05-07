@@ -84,6 +84,12 @@ char *get_next_line(int fd)
 		count = read(fd, buffer, BUFFER_SIZE);
 		if (count != BUFFER_SIZE)
 		{
+			if (count == 0)
+			{
+//				if (line)
+//					free(line);
+				return(NULL);
+			}
 			buffer[count] = '\0';
 			rtn = ft_substr(buffer, 0, ft_strlen(buffer));
 			free(line);
@@ -109,7 +115,7 @@ int main(int argc, char **argv)
 		if (fd == -1)
 			printf("Can't open the file\n");
 		else
-			for(int i = 0; i  < 4; i++)
+			for(int i = 0; i  < 10; i++)
 			{
 				printf("This is my line %d \n------\n%s-------\n",i+1,get_next_line(fd));
 			}
