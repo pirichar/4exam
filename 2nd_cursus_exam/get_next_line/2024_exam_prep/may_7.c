@@ -4,11 +4,9 @@
 #include <string.h>
 #include <fcntl.h>
 
-
 #ifndef BUFFER_SIZE
 # define BUFFER_SIZE 1
 #endif
-
 
 int ft_strlen(char *str)
 {
@@ -27,20 +25,18 @@ char *ft_strchr(char *str, char c)
 	}
 	return(NULL);
 }
+
 char *ft_strjoin(char* s1, char* s2)
 {
 	int s1_len = ft_strlen(s1);
 	int s2_len = ft_strlen(s2);
 	char* rtn = malloc(sizeof(char) * (s1_len + s2_len + 1));
-	
-	//copy s1
+
 	for(int i = 0; s1[i];i++)
 		rtn[i] = s1[i];
-	//copy s2
 	for(int i = 0; s2[i];i++)
 		rtn[ft_strlen(s1)+i] = s2[i];
 	rtn[s1_len + s2_len + 1]  = '\0';
-	//free s1
 	if (s1)
 		free(s1);
 	return(rtn);
@@ -74,7 +70,10 @@ char *get_next_line(int fd)
 	char *rtn;
 
 	if (!line)
+	{
 		line = malloc(1);
+		*line = '\0';
+	}
 	if (fd < 0)
 		return(NULL);
 	while(1)
@@ -85,11 +84,7 @@ char *get_next_line(int fd)
 		if (count != BUFFER_SIZE)
 		{
 			if (count == 0)
-			{
-//				if (line)
-//					free(line);
 				return(NULL);
-			}
 			buffer[count] = '\0';
 			rtn = ft_substr(buffer, 0, ft_strlen(buffer));
 			free(line);
@@ -117,7 +112,10 @@ int main(int argc, char **argv)
 		else
 			for(int i = 0; i  < 10; i++)
 			{
-				printf("This is my line %d \n------\n%s-------\n",i+1,get_next_line(fd));
+				char *rtn = get_next_line(fd);
+				printf("This is my line %d \n------\n%s-------\n",i+1,rtn);
+				if (rtn != NULL)
+					free(rtn);
 			}
 	}
 	else {
