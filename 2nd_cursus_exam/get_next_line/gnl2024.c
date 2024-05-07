@@ -122,7 +122,7 @@ int main(int argc, char **argv)
 		else
 			for(int i = 0; i  < 4; i++)
 			{
-				printf("This is my line %d \n------\n%s-------\n",i,get_next_line(fd));
+				printf("This is my line %d \n------\n%s-------\n",i+1,get_next_line(fd));
 			}
 	}
 	else {
