@@ -15,6 +15,7 @@ int ft_strlen(char *str)
 		i++;
 	return(i);
 }
+
 char *ft_strchr(char *str, char c)
 {
 	while(*str)
@@ -35,8 +36,8 @@ char *ft_strjoin(char* s1, char* s2)
 	for(int i = 0; s1[i];i++)
 		rtn[i] = s1[i];
 	for(int i = 0; s2[i];i++)
-		rtn[ft_strlen(s1)+i] = s2[i];
-	rtn[s1_len + s2_len + 1]  = '\0';
+		rtn[s1_len+i] = s2[i];
+	rtn[s1_len + s2_len]  = '\0';
 	if (s1)
 		free(s1);
 	return(rtn);
@@ -48,12 +49,12 @@ char *ft_substr(char *str, int start, int lenght)
 	int size;
 
 	size = lenght;
-	if (start > lenght)
+	if (start > ft_strlen(str))
 		size = 0;
 	else if(start + lenght > ft_strlen(str))
 		size = ft_strlen(str) - start;
 
-	rtn = malloc(sizeof(char) * lenght + 1);
+	rtn = malloc(sizeof(char) * size + 1);
 	for (int i = 0; i < size; i++)
 		rtn[i] = str[start++];
 	rtn[size] = '\0';
@@ -69,13 +70,13 @@ char *get_next_line(int fd)
 	int count;
 	char *rtn;
 
+	if (fd < 0)
+		return(NULL);
 	if (!line)
 	{
 		line = malloc(1);
 		*line = '\0';
 	}
-	if (fd < 0)
-		return(NULL);
 	while(1)
 	{
 		if (ft_strchr(line, '\n'))
@@ -84,7 +85,16 @@ char *get_next_line(int fd)
 		if (count != BUFFER_SIZE)
 		{
 			if (count == 0)
+			{
+				char *tmp;
+				tmp = line;
+				line = NULL;
+				return(tmp);
+			}
+			else if(count == -1)
+			{
 				return(NULL);
+			}
 			buffer[count] = '\0';
 			rtn = ft_substr(buffer, 0, ft_strlen(buffer));
 			free(line);
@@ -114,8 +124,8 @@ int main(int argc, char **argv)
 			{
 				char *rtn = get_next_line(fd);
 				printf("This is my line %d \n------\n%s-------\n",i+1,rtn);
-				if (rtn != NULL)
-					free(rtn);
+			// if (rtn != NULL)
+					// free(rtn);
 			}
 	}
 	else {
