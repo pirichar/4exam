@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <string.h>
 #include <fcntl.h>
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 1
+# define BUFFER_SIZE 100
 #endif
 
 int ft_strlen(char *str)
@@ -48,11 +47,12 @@ char *ft_substr(char *str, int start, int lenght)
 	char *rtn;
 	int size;
 
+	int str_len = ft_strlen(str);
 	size = lenght;
-	if (start > ft_strlen(str))
+	if (start > str_len)
 		size = 0;
-	else if(start + lenght > ft_strlen(str))
-		size = ft_strlen(str) - start;
+	else if(start + lenght > str_len)
+		size = str_len - start;
 
 	rtn = malloc(sizeof(char) * size + 1);
 	for (int i = 0; i < size; i++)
@@ -61,55 +61,43 @@ char *ft_substr(char *str, int start, int lenght)
 	return(rtn); 
 }
 
-
 char *get_next_line(int fd)
 {
-	char buffer[BUFFER_SIZE +1];
-	static char *line;
-	char *new_line;
+	char buf[BUFFER_SIZE+1];
 	int count;
+	static char* line;
+	char* new_line;
 	char *rtn;
 
-	if (fd < 0)
-		return(NULL);
 	if (!line)
 	{
 		line = malloc(1);
 		*line = '\0';
 	}
-	while(1)
+	count = BUFFER_SIZE;
+	while(count == BUFFER_SIZE)
 	{
 		if (ft_strchr(line, '\n'))
 			break;
-		count = read(fd, buffer, BUFFER_SIZE);
-		if (count != BUFFER_SIZE)
-		{
-			if (count == 0)
-			{
-				char *tmp;
-				tmp = line;
-				line = NULL;
-				return(tmp);
-			}
-			else if(count == -1)
-			{
-				return(NULL);
-			}
-			buffer[count] = '\0';
-			rtn = ft_substr(buffer, 0, ft_strlen(buffer));
-			free(line);
-			return(rtn);
-		}
-		buffer[count] = '\0';
-		line = ft_strjoin(line, buffer);
+		count = read(fd, buf, BUFFER_SIZE);
+		buf[count] = '\0';
+		line = ft_strjoin(line, buf);
 	}
+	if ((ft_strlen(line) == 0  && count == 0 )|| count == -1)
+	{
+		free(line);
+		line = NULL;
+		return (NULL);
+	}
+	if (count == 0)
+		return(line);
 	new_line = ft_strchr(line, '\n');
 	rtn = ft_substr(line, 0, new_line - line + 1);
-	free(line);
-	line  = ft_substr(new_line,1, ft_strlen(new_line));
-	return (rtn);
+	char *tmp = line;
+	line = ft_substr(new_line, 1, ft_strlen(new_line));
+	free(tmp);
+	return(rtn);
 }
-
 
 
 int main(int argc, char **argv)
@@ -124,7 +112,7 @@ int main(int argc, char **argv)
 			{
 				char *rtn = get_next_line(fd);
 				printf("This is my line %d \n------\n%s-------\n",i+1,rtn);
-			if (rtn != NULL)
+			if (rtn && *rtn)
 					free(rtn);
 			}
 	}
