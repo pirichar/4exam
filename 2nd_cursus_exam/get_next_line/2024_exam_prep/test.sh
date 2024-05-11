@@ -1,5 +1,8 @@
 #! /bin/bash
 
+echo -e '\n\n\nTest with 0\n\n\n';
+gcc -Wall -Werror -Wextra -D BUFFER_SIZE=0 -g may_11.c
+./a.out text.txt
 echo -e '\n\n\nTest with 1\n\n\n';
 gcc -Wall -Werror -Wextra -D BUFFER_SIZE=1 -g may_11.c
 ./a.out text.txt

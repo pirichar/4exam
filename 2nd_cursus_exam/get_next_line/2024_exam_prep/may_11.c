@@ -69,6 +69,8 @@ char *get_next_line(int fd)
 	char* new_line;
 	char *rtn;
 
+	if (BUFFER_SIZE == 0)
+		return(NULL);
 	if (!line)
 	{
 		line = malloc(1);
@@ -83,13 +85,13 @@ char *get_next_line(int fd)
 		buf[count] = '\0';
 		line = ft_strjoin(line, buf);
 	}
-	if ((ft_strlen(line) == 0  && count == 0 )|| count == -1)
+	if (ft_strlen(line) == 0 || count == -1)
 	{
 		free(line);
 		line = NULL;
 		return (NULL);
 	}
-	if (count < BUFFER_SIZE)
+	if (count == 0)
 		return(line);
 	new_line = ft_strchr(line, '\n');
 	rtn = ft_substr(line, 0, new_line - line + 1);
