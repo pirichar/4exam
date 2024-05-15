@@ -112,6 +112,7 @@ char* get_next_line(int fd)
 	return (rtn);
 }
 
+/*
 int main(int argc, char **argv)
 {
 	if (argc == 2)
@@ -128,4 +129,4 @@ int main(int argc, char **argv)
 	else {
 	printf("Please provide 2 arguments\n");
 	}
-}
+}*/
