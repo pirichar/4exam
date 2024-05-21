@@ -34,10 +34,17 @@ char *get_next_line(int fd)
 	if (count == 0)
 		return(line);
 	new_line = ft_strchr(line, '\n');
+	if (!new_line)
+	{
+		rtn = line;
+		line = NULL;
+		return (rtn);
+	}
 	rtn = ft_substr(line, 0, new_line - line + 1);
 	char *tmp = line;
 	line = ft_substr(new_line, 1, ft_strlen(new_line));
 	free(tmp);
+
 	return(rtn);
 }
 
@@ -54,11 +61,12 @@ int main(int argc, char **argv)
 			{
 				char *rtn = get_next_line(fd);
 				printf("This is my line %d \n------\n%s-------\n",i+1,rtn);
-			if (rtn && *rtn)
-					free(rtn);
+				free(rtn);
 			}
 	}
 	else {
 	printf("Please provide 2 arguments\n");
 	}
-}*/
+}
+
+*/
