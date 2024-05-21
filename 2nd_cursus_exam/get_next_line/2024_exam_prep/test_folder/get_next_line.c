@@ -9,8 +9,6 @@ char *get_next_line(int fd)
 	char* new_line;
 	char *rtn;
 
-	if (BUFFER_SIZE == 0)
-		return(NULL);
 	if (!line)
 	{
 		line = malloc(1);
@@ -31,10 +29,8 @@ char *get_next_line(int fd)
 		line = NULL;
 		return (NULL);
 	}
-	if (count == 0)
-		return(line);
 	new_line = ft_strchr(line, '\n');
-	if (!new_line)
+	if (!new_line || count == 0)
 	{
 		rtn = line;
 		line = NULL;
@@ -48,25 +44,3 @@ char *get_next_line(int fd)
 	return(rtn);
 }
 
-/*
-int main(int argc, char **argv)
-{
-	if (argc == 2)
-	{
-		int fd = open(argv[1], O_RDONLY);
-		if (fd == -1)
-			printf("Can't open the file\n");
-		else
-			for(int i = 0; i  < 10; i++)
-			{
-				char *rtn = get_next_line(fd);
-				printf("This is my line %d \n------\n%s-------\n",i+1,rtn);
-				free(rtn);
-			}
-	}
-	else {
-	printf("Please provide 2 arguments\n");
-	}
-}
-
-*/
